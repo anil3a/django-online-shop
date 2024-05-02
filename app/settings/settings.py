@@ -7,7 +7,9 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET', 'anldjangoapp-re-zlg0$w#!^uvca@=4@k
 
 DEBUG = os.environ.get('DJANGO_DEBUG', False)
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+PROJECT_DIR = os.environ.get('DJANGO_DIR', '/home/django/app')
+
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split(' ')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -16,6 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'store.apps.StoreConfig',
+    'django_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -41,6 +45,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.static',
             ],
         },
     },
@@ -49,23 +54,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'settings.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        "ENGINE": "django.contrib.gis.db.backends.postgis",
-        "NAME": os.environ.get('POSTGRES_DB', 'testapp'),
-        "USER": os.environ.get('POSTGRES_USER', 'postgres'),
-        "PASSWORD": os.environ.get('POSTGRES_PASSWORD', 'postgres'),
-        "HOST": os.environ.get('DJANGO_DB_HOST', 'localhost'),
-        "PORT": os.environ.get('DJANGO_DB_PORT', '5432'),
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': os.environ.get('POSTGRES_DB', 'testapp'),
+        'USER': os.environ.get('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'postgres'),
+        'HOST': os.environ.get('DJANGO_DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DJANGO_DB_PORT', '5432'),
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -82,10 +80,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -94,11 +88,9 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
+STATIC_ROOT = PROJECT_DIR + '/../staticfiles'
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [PROJECT_DIR + '/static']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -124,7 +116,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': os.environ.get('DJANGO_LOGFILE', '../logs/django.log'),
+            'filename': os.environ.get('DJANGO_LOGFILE', 'home/django/logs/django.log'),
             'formatter': 'verbose',
         },
         'email': {
@@ -146,6 +138,6 @@ LOGGING = {
 }
 
 
-CSRF_TRUSTED_ORIGINS = os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS").split(" ")
+CSRF_TRUSTED_ORIGINS = os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS').split(' ')
 CORS_ALLOW_ALL_ORIGINS = True
 
