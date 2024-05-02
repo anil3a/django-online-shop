@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: anl-django-app
+    build:
+      context: ./app
+      dockerfile: ../build/Dockerfile_app
+    command: python manage.py runserver 0.0.0.0:8001
+    env_file:
+      - build/.env
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./app:/home/django/app
+    depends_on:
+      - db
+
+  db:
+    container_name: anl-django-db
+    image: postgis/postgis:16-3.4
+    volumes:
+      - djangoapp_pg_data:/var/lib/postgresql/data/
+    env_file:
+      - build/.env
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: anl-django-pgadmin
+    depends_on:
+      - db
+    ports:
+      - "5001:80"
+    env_file:
+      - build/.env
+    restart: unless-stopped
+
+volumes:
+    djangoapp_pg_data:
