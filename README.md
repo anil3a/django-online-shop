@@ -6,18 +6,40 @@ Skeleton setup of Django with postgres in a docker environment
 ````
 djangoapp/
 ├── app/
-│ ├── settings/
-│ │ ├── init.py
-│ │ ├── asgi.py
-│ │ ├── settings.py
-│ │ ├── urls.py
-│ │ └── wsgi.py
-│ ├── init.py
-│ └── manage.py
+│ ├──── settings/
+│ │ ├─────── init.py
+│ │ ├─────── asgi.py
+│ │ ├─────── settings.py
+│ │ ├─────── urls.py
+│ │ └─────── wsgi.py
+│ ├──── static/
+│ │ ├─────── css
+│ │ │ └───────── style.css
+│ │ ├─────── images
+│ │ └─────── js
+│ ├──── store/
+│ │ ├─────── migrations
+│ │ │ ├─────────  0001_initial.py
+│ │ │ └───────── __init__.py
+│ │ ├─────── templates
+│ │ │ ├───────── base
+│ │ │ │ └─────────── index.html
+│ │ │ └───────── home.html
+│ │ ├─────── __init__.py
+│ │ ├─────── admin.py
+│ │ ├─────── apps.py
+│ │ ├─────── models.py
+│ │ ├─────── tests.py
+│ │ ├─────── urls.py
+│ │ ├─────── views.py
+│ │ └─────── init.py
+│ ├──── __init__.py
+│ ├──── manage.py
+│ └──── requirements.txt
 ├── build/
-│ ├── SAMPLE.env
-│ ├── Dockerfile_app
-│ └── Dockerfile_db
+│ ├──── SAMPLE.env
+│ ├──── Dockerfile_app
+│ └──── Dockerfile_db
 ├── .gitignore
 ├── docker-compose.yml
 └── README.md
