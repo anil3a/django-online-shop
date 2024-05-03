@@ -1,30 +1,21 @@
 {% extends "base/index.html" %}
 
 {% block content %}
-<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-  <header class="masthead mb-auto">
-    <div class="inner">
-      <h3 class="masthead-brand">Django Store</h3>
-      <nav class="nav nav-masthead justify-content-center">
-        <a class="nav-link active" href="#">Home</a>
-        <a class="nav-link" href="#">Categories</a>
-        <a class="nav-link" href="#">Products</a>
-      </nav>
+<main class="flex-shrink-0 mt-per-10">
+    <div class="container">
+        <h1 class="mt-5">Welcome to Django Store</h1>
+        <h4>This is our Whimsy Emporium!</h4>
+        <p class="lead">
+            At Whimsy Emporium, we believe that life is better with a dash of laughter and a sprinkle of silliness.
+            Step into our magical world of whimsical wonders,
+            where every product is designed to bring joy and delight to your day.
+        </p>
+        <p class="lead">Our products are carefully crafted to ignite your imagination and inspire moments of laughter and delight.
+            Whether you're shopping for yourself or searching for the perfect gift for a loved one,
+            you're sure to find something magical here at Whimsy Emporium.
+        </p>
+        <p class="lead">So why wait? Dive into our fantastical world of fun and start spreading smiles today!</p>
+        <br>
     </div>
-  </header>
-
-  <main role="main" class="inner cover">
-    <h1 class="cover-heading">Welcome to my store.</h1>
-    <p class="lead">The skeleton docker setup for django and postgres in a ecommerce setup.</p>
-    <p class="lead">
-      <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
-    </p>
-  </main>
-
-  <footer class="mastfoot mt-auto">
-    <div class="inner">
-      <p>Django store with love by <a href="https://prajapatianil.com.np/">Anil Prajapati</a></p>
-    </div>
-  </footer>
-</div>
+</main>
 {% endblock %}

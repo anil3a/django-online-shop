@@ -18,8 +18,10 @@ class BaseModel(models.Model):
 
 class Category(BaseModel):
     name = models.CharField(max_length=300)
+    description = models.TextField(null=True, blank=True)
 
     class Meta(BaseModel.Meta):
+        verbose_name_plural = "categories"
         ordering = ['-pk']
 
     def __str__(self):
@@ -28,10 +30,12 @@ class Category(BaseModel):
 
 class Product(BaseModel):
     name = models.CharField(max_length=200)
-    short = models.TextField(verbose_name='Short description', null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     cost = models.DecimalField(max_digits=12, decimal_places=2)
     price = models.DecimalField(max_digits=12, decimal_places=2)
+    quantity = models.IntegerField(default=0)
+    categories = models.ManyToManyField(Category)
+    sku = models.CharField(max_length=50, unique=True)
 
     class Meta(BaseModel.Meta):
         ordering = ['pk']
