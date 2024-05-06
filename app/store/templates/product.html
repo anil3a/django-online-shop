@@ -1,4 +1,4 @@
-{% extends "base/index.html" %}{% load static %}{% load store_extras %}
+{% extends "base/index.html" %}
 
 {% block content %}
 <main class="flex-shrink-0 mt-5">
@@ -7,30 +7,7 @@
     <section>
       <div class="container py-5">
         <div class="row">
-
-          {% for product in products %}
-            <div class="col-md-6 col-lg-4 mb-4 mb-lg-0 mt-4">
-            <div class="card">
-              <div class="d-flex justify-content-between p-3">
-                <p class="lead mb-0">{{ product.name }}</p>
-                <div
-                    class="bg-info rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
-                    style="width: 35px; height: 35px;">
-                  <p class="text-white mb-0 small">x{{ product.quantity }}</p>
-                </div>
-              </div>
-              <img src="{% static 'images/django_unchained.png' %}" class="card-img-top" alt="Laptop" />
-              <div class="card-body">
-                <div class="d-flex justify-content-between mb-3">
-                  <h5 class="text-success mb-0">{{ product.price|currency }}</h5>
-                   <button type="button" class="btn btn-primary">Add to Cart</button>
-                </div>
-
-              </div>
-            </div>
-          </div>
-          {% endfor %}
-
+          {% include 'includes/product-list-items.html' %}
         </div>
       </div>
     </section>

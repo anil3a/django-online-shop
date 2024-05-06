@@ -1,21 +1,17 @@
 from .models import Category, Product
 from django.views.generic.base import TemplateView, View
 from django.views.generic.list import ListView
+from django.utils.functional import cached_property
 
 
-class IndexView(TemplateView):
-    template_name = "home.html"
-
-
-class CategoryView(ListView):
-    model = Category
-    context_object_name = "categories"
-    paginate_by = 4
+class HTMXListView(ListView):
+    template_name = None
+    template_item_name = None
 
     def get_template_names(self):
         if self.request.htmx:
-            return "includes/category-list-items.html"
-        return ["category.html"]
+            return [self.template_item_name]
+        return [self.template_name]
 
     def get_context_data(self, **kwargs):
         page_num = self.request.GET.get("page", "1")
@@ -25,7 +21,22 @@ class CategoryView(ListView):
         return context
 
 
-class ProductView(ListView):
+class IndexView(TemplateView):
+    template_name = "home.html"
+
+
+class CategoryView(HTMXListView):
+    model = Category
+    context_object_name = "categories"
+    template_name = "category.html"
+    template_item_name = "includes/category-list-items.html"
+    paginate_by = 4
+
+
+class ProductView(HTMXListView):
     model = Product
-    template_name = "product.html"
     context_object_name = "products"
+    template_name = "product.html"
+    template_item_name = "includes/product-list-items.html"
+    paginate_by = 4
+
