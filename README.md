@@ -53,7 +53,18 @@ djangoapp/
 4. Build using docker compose file: `docker compose build`
 5. Create and start docker containers: `docker compose up -d`  
 6. Run migration: `docker exec -u root anl-django-app python manage.py migrate`
+7. Create Super admin of django admin using `manage createsuperuser` inside "anl-django-app" container.
 
+
+## Plan
+
+- Create a minimal setup of Django and Postgres in a docker
+- Set up a store to layout basic Django functionality in Class based layout
+- Integrate HTMX
+- Integrate React and django rest frameworks
+- Complete creating all models for e-commerce store
+- Checkout feature
+- 
 
 ## License
 

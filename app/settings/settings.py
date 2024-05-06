@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'store.apps.StoreConfig',
+    'django_htmx',
 ]
 
 MIDDLEWARE = [
@@ -29,6 +30,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_htmx.middleware.HtmxMiddleware',
 ]
 
 ROOT_URLCONF = 'settings.urls'
@@ -129,7 +131,7 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'INFO',
         },
-        'myapp': {
+        'store': {
             'handlers': ['console', 'file', 'email'],
             'level': 'DEBUG',
         },

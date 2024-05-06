@@ -6,24 +6,8 @@
     <h1 class="mt-5">List of Categories</h1>
     <section>
       <div class="container py-3">
-        <div class="row">
-
-          {% for category in categories %}
-          <div class="col-md-6 col-lg-4 mb-4 mb-lg-0 mt-4">
-            <div class="card">
-              <div class="d-flex justify-content-between p-3">
-                <p class="lead mb-0">{{ category.name }}</p>
-              </div>
-<!--              <div class="card-body">-->
-<!--                <div class="d-flex justify-content-between mb-2">-->
-<!--                  <p class="text-muted mb-0">{{ category.description }}</p>-->
-<!--                </div>-->
-<!--              </div>-->
-            </div>
-          </div>
-          {% endfor %}
-
-
+        <div class="row mb-4" id="list-of-category-items">
+          {% include 'includes/category-list-items.html' %}
         </div>
       </div>
     </section>
