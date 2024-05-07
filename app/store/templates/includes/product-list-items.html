@@ -1,6 +1,6 @@
 {% load static %}{% load store_extras %}
 {% for product in products %}
-<div class="col-md-6 col-lg-4 mb-4 mb-lg-0 mt-4">
+<div class="col-md-4 col-lg-4 mb-4 mb-lg-0 mt-4">
   <div class="card">
     <div class="d-flex justify-content-between p-3">
       <p class="lead mb-0">{{ product.name }}</p>
@@ -21,7 +21,7 @@
 </div>
 {% if forloop.last and has_next_page %}
   <div
-      class="col-md-12"
+      style="width: 0%; padding: 0"
       hx-trigger="revealed"
       hx-get="{% url 'product' %}?page={{ page_obj.next_page_number }}"
       hx-swap="afterend"

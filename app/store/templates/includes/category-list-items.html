@@ -14,7 +14,7 @@
 </div>
 {% if forloop.last and has_next_page %}
   <div
-      class="col-md-12"
+      style="width: 0%; padding: 0"
       hx-trigger="revealed"
       hx-get="{% url 'category' %}?page={{ page_obj.next_page_number }}"
       hx-swap="afterend"
