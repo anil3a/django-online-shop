@@ -1,7 +1,10 @@
 from .models import Category, Product
 from django.views.generic.base import TemplateView, View
 from django.views.generic.list import ListView
-from django.utils.functional import cached_property
+from django.conf import settings
+from django.templatetags.static import static
+from django.urls import reverse_lazy
+from django.http import JsonResponse
 
 
 class HTMXListView(ListView):
@@ -40,3 +43,42 @@ class ProductView(HTMXListView):
     template_item_name = "includes/product-list-items.html"
     paginate_by = 4
 
+
+class CheckoutView(TemplateView):
+    template_name = "checkout.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["react_js_url"] = static('reactjs/bundle.js')
+        context["react_css_url"] = static('reactjs/style.css')
+        if settings.REACT_CHECKOUT_DEVELOPMENT:
+            context["react_js_url"] = 'http://localhost:8002/static/js/bundle.js'
+            context["react_css_url"] = ''
+        context["react_api_url"] = settings.REACT_API_URL + reverse_lazy('cart')
+
+        return context
+
+
+class CartView(TemplateView):
+    template_name = "checkout.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["react_js_url"] = static('reactjs/bundle.js')
+        context["react_css_url"] = static('reactjs/style.css')
+        if settings.REACT_CHECKOUT_DEVELOPMENT:
+            context["react_js_url"] = 'http://localhost:8002/static/js/bundle.js'
+            context["react_css_url"] = ''
+        context["react_api_url"] = settings.REACT_API_URL + reverse_lazy('cart')
+
+        return context
+
+
+class CheckoutAPIView(View):
+    def get(self, request):
+        cart_items = Product.objects.all()
+        data = [
+            {'id': item.id, 'name': item.name, 'quantity': 1, 'price': item.price}
+            for item in cart_items
+        ]
+        return JsonResponse(data, safe=False)

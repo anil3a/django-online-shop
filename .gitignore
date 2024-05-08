@@ -4,7 +4,6 @@ log
 *.pot
 *.pyc
 __pycache__
-db.sqlite3
 media
 
 # Backup files #
@@ -71,8 +70,6 @@ coverage.xml
 # celery
 celerybeat-schedule.*
 
-# SageMath parsed files
-*.sage.py
 
 # Environments
 .env

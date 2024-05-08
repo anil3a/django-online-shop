@@ -15,7 +15,8 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  </body>
+  {% block head_scripts %}
+  {% endblock %}
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -24,17 +25,15 @@
 {% endblock %}
 
 {% block content %}
-<main class="flex-shrink-0">
-  <div class="container">
-    <h1 class="mt-5">Welcome Home</h1>
-  </div>
+<main class="flex-shrink-0 mt-5">
+  <div class="container mt-2" id="base-root"></div>
 </main>
 {% endblock %}
 
 {% block footer %}
 <footer class="footer mt-auto py-3 bg-light-subtle">
   <div class="container text-center">
-    <span class="text-muted">Made with ❤️ by <a href="https://prajapatianil.com.np/">Anil Prajapati</a></span>
+    <span class="text-muted">Made with ❤️ by <a href="https://prajapatianil.com.np/" target="_blank">Anil Prajapati</a></span>
   </div>
 </footer>
 {% endblock %}

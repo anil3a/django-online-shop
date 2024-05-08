@@ -1,0 +1,12 @@
+{% extends "base/index.html" %}
+
+{% block head_scripts %}
+    <script type="module" src="{{ react_js_url }}"></script>
+    {% if react_css_url %}
+        <link rel="stylesheet" href="{{ react_css_url }}">
+    {% endif %}
+    <script>
+        window.checkout_api = "{% url 'checkout_api' %}";
+        window.checkout_url = "{% url 'checkout' %}";
+    </script>
+{% endblock %}

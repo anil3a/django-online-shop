@@ -2,7 +2,7 @@
   <!-- Fixed navbar -->
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-light-subtle">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">DJ Store</a>
+      <a class="navbar-brand" href="/">DJ Store</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -19,6 +19,14 @@
           <li class="nav-item">
             {% url 'product' as product %}
             <a class="nav-link {% if request.path == product %}active{% endif %}" href="{% url 'product' %}">Products</a>
+          </li>
+          <li class="nav-item">
+            {% url 'cart' as cart %}
+            <a class="nav-link {% if request.path == cart %}active{% endif %}" href="{% url 'cart' %}">Cart</a>
+          </li>
+          <li class="nav-item">
+            {% url 'checkout' as checkout %}
+            <a class="nav-link {% if request.path == checkout %}active{% endif %}" href="{% url 'checkout' %}">Checkout</a>
           </li>
         </ul>
         <div class="d-flex">

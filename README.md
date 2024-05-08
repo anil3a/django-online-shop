@@ -61,10 +61,10 @@ djangoapp/
 - [x] Create a minimal setup of Django and Postgres in a docker
 - [x] Set up a store to layout basic Django functionality in Class based layout
 - [x] Integrate HTMX
-- [ ] Integrate React and django rest frameworks
+- [ ] Integrate React
 - [ ] Complete creating all models for e-commerce store
 - [ ] Checkout feature
-- 
+
 
 ## License
 

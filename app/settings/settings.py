@@ -5,7 +5,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET', 'anldjangoapp-re-zlg0$w#!^uvca@=4@k#^1695e*(pa+8^9et_@^f=!25on3!eeb')
 
-DEBUG = os.environ.get('DJANGO_DEBUG', False)
+DEBUG = os.environ.get('DJANGO_DEBUG', "False").lower() in ("true", "t")
 
 PROJECT_DIR = os.environ.get('DJANGO_DIR', '/home/django/app')
 
@@ -18,8 +18,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'store.apps.StoreConfig',
+
     'django_htmx',
+
+    'store',
 ]
 
 MIDDLEWARE = [
@@ -142,3 +144,5 @@ LOGGING = {
 CSRF_TRUSTED_ORIGINS = os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS').split(' ')
 CORS_ALLOW_ALL_ORIGINS = True
 
+REACT_CHECKOUT_DEVELOPMENT = os.environ.get('REACT_CHECKOUT_DEVELOPMENT', "True").lower() in ("true", "t")
+REACT_API_URL = os.environ.get('REACT_API_URL', '')
