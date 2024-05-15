@@ -61,8 +61,9 @@ djangoapp/
 - [x] Create a minimal setup of Django and Postgres in a docker
 - [x] Set up a store to layout basic Django functionality in Class based layout
 - [x] Integrate HTMX
-- [ ] Integrate React
-- [ ] Complete creating all models for e-commerce store
+- [x] Integrate React
+- [ ] Setup Models for Cart
+- [ ] Complete creating remaining models for e-commerce store
 - [ ] Checkout feature
 
 
