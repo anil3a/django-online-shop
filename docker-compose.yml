@@ -13,6 +13,11 @@ services:
       - ./app:/home/django/app
     depends_on:
       - db
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app.rule=Host(`zmydjango.com`)"
+    networks:
+      - traefik
 
   db:
     container_name: anl-django-db
@@ -21,6 +26,8 @@ services:
       - djangoapp_pg_data:/var/lib/postgresql/data/
     env_file:
       - build/.env
+    networks:
+      - traefik
 
   pgadmin:
     image: dpage/pgadmin4
@@ -32,6 +39,12 @@ services:
     env_file:
       - build/.env
     restart: unless-stopped
+    networks:
+      - traefik
 
 volumes:
-    djangoapp_pg_data:
+  djangoapp_pg_data:
+
+networks:
+  traefik:
+    external: true
