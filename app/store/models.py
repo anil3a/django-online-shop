@@ -1,6 +1,7 @@
 from django.db import models
-from django.utils import timezone
-
+from django.core.validators import RegexValidator
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, User
+# from django.utils import timezone
 
 class BaseModel(models.Model):
     """
@@ -44,12 +45,90 @@ class Product(BaseModel):
         return f"Product {self.name}"
 
 
+class CustomerManager(BaseUserManager):
+    def create_user(self, email, first_name, last_name, password=None):
+        if not email:
+            raise ValueError("The Email field must be set")
+        email = self.normalize_email(email)
+        user = self.model(email=email, first_name=first_name, last_name=last_name)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+
+class Customer(BaseModel, AbstractBaseUser):
+    GENDER_CHOICES = [
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('O', 'Other'),
+    ]
+    user = models.OneToOneField(
+        User,
+        related_name="customer",
+        on_delete=models.CASCADE,
+    )
+    company = models.CharField(max_length=128, null=True, blank=True)
+    # Australian phone format
+    australian_phone_number_validator = RegexValidator(
+        regex=r'^(\+61|0)[2-478](\d{8})$',
+        message="Phone number must be in the format: '+614XXXXXXXX' or '0XXXXXXXX'."
+    )
+    phone_number = models.CharField(
+        max_length=12,
+        validators=[australian_phone_number_validator]
+    )
+    date_of_birth = models.DateField(null=True, blank=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
+    loyalty_points = models.IntegerField(default=0)
+    last_login_date = models.DateTimeField(null=True, blank=True)
+    is_staff = models.BooleanField(default=False)
+
+    objects = CustomerManager()
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
+    class Meta:
+        ordering = ['-pk']
+
+
+class Address(models.Model):
+    ADDRESS_TYPE_CHOICES = [
+        ('billing', 'Billing'),
+        ('shipping', 'Shipping'),
+    ]
+    STATE_CHOICES = [
+        ('NSW', 'New South Wales'),
+        ('VIC', 'Victoria'),
+        ('QLD', 'Queensland'),
+        ('SA', 'South Australia'),
+        ('WA', 'Western Australia'),
+        ('TAS', 'Tasmania'),
+        ('ACT', 'Australian Capital Territory'),
+        ('NT', 'Northern Territory'),
+    ]
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='addresses')
+    contact_phone_number = models.CharField(
+        max_length=12,
+        null=True,
+        blank=True
+    )
+    contact_email = models.CharField(max_length=64, blank=True, null=True)
+    unit = models.CharField(max_length=32, blank=True, null=True)
+    street = models.CharField(max_length=64)
+    city = models.CharField(max_length=64)
+    state = models.CharField(max_length=3, choices=STATE_CHOICES)
+    postcode = models.CharField(max_length=4)
+    country = models.CharField(max_length=64)
+    is_billing = models.BooleanField(default=False)
+    note = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        address_type = 'Billing' if self.is_billing else 'Shipping'
+        return f"{self.customer} - {address_type} Address"
+
+
 """
-
-class Customer():
-
-class Address():
-
 class Cart():
 
 class CartItem():
