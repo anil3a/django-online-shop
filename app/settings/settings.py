@@ -20,8 +20,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_htmx',
+    'crispy_forms',
+    'crispy_bootstrap5',
 
-    'store',
+    'accounts',
+    'store'
 ]
 
 MIDDLEWARE = [
@@ -40,7 +43,7 @@ ROOT_URLCONF = 'settings.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -146,3 +149,9 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 REACT_CHECKOUT_DEVELOPMENT = os.environ.get('REACT_CHECKOUT_DEVELOPMENT', "True").lower() in ("true", "t")
 REACT_API_URL = os.environ.get('REACT_API_URL', '')
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
