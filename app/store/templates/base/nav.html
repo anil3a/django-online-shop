@@ -28,14 +28,31 @@
             {% url 'checkout' as checkout %}
             <a class="nav-link {% if request.path == checkout %}active{% endif %}" href="{% url 'checkout' %}">Checkout</a>
           </li>
-          <li class="nav-item">
-            {% url 'login' as login %}
-            <a class="nav-link {% if request.path == login %}active{% endif %}" href="{% url 'login' %}">Account</a>
-          </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              {% url 'dashboard' as dashboard %}
+              <a class="nav-link {% if request.path == dashboard %}active{% endif %}" href="{% url 'dashboard' %}">Account</a>
+            </li>
+            <li class="nav-item">
+              <form method="post" action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-link nav-link">Logout</button>
+              </form>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              {% url 'login' as login %}
+              <a class="nav-link {% if request.path == login %}active{% endif %}" href="{% url 'login' %}">Account</a>
+            </li>
+          {% endif %}
         </ul>
-        <div class="d-flex">
-          <a href="/admin">Login to Admin</a>
-        </div>
+
+        {% if user.is_staff %}
+          <div class="d-flex">
+            <a class="nav-link" href="/admin/">Admin</a>
+          </div>
+        {% endif %}
+
         <!--                <form class="d-flex">-->
         <!--                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
         <!--                    <button class="btn btn-outline-success" type="submit">Search</button>-->

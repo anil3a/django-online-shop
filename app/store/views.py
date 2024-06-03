@@ -5,6 +5,8 @@ from django.conf import settings
 from django.templatetags.static import static
 from django.urls import reverse_lazy
 from django.http import JsonResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 
 
 class HTMXListView(ListView):
@@ -82,3 +84,13 @@ class CheckoutAPIView(View):
             for item in cart_items
         ]
         return JsonResponse(data, safe=False)
+
+
+class DashboardView(LoginRequiredMixin, TemplateView):
+    template_name = 'dashboard.html'
+    success_url = reverse_lazy('dashboard')
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('login')
+        return super().get(request, *args, **kwargs)
