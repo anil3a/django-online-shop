@@ -1,0 +1,25 @@
+{% extends "base/index.html" %}
+
+{% block content %}
+<h1>Profile</h1>
+<div >
+    <div id="profile-container">
+        User
+        <br>
+        <div>{{ user }}</div>
+        <br>
+        Customer
+        <br>
+        <div>{{ customer }} </div>
+    </div>
+</div>
+
+<h2>Addresses</h2>
+<div >
+    <div id="address-container">
+        Addresses
+        <br>
+        <div>{{ addresses }}</div>
+    </div>
+</div>
+{% endblock %}

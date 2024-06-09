@@ -104,12 +104,16 @@ STATICFILES_DIRS = [PROJECT_DIR + '/static']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+DEFAULT_LOG_HANDLERS = os.environ.get(
+    "DJANGO_LOGGING_DEFAULT_HANDLERS", "console file"
+).split()
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format': '{levelname} {asctime} {module} {message}',
+            'format': '{levelname} {asctime} {process} {name} {module} {message}',
             'style': '{',
         },
     },
@@ -135,12 +139,20 @@ LOGGING = {
         'django': {
             'handlers': ['console'],
             'level': 'INFO',
+            "propagate": True,
         },
         'store': {
             'handlers': ['console', 'file', 'email'],
             'level': 'DEBUG',
+            "propagate": False,
+        },
+        'accounts': {
+            'handlers': ['console', 'file', 'email'],
+            'level': 'DEBUG',
+            "propagate": False,
         },
     },
+    "root": {"handlers": DEFAULT_LOG_HANDLERS, "level": "DEBUG"},
 }
 
 

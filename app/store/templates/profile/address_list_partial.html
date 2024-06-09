@@ -1,0 +1,10 @@
+<ul>
+    {% for address in addresses %}
+        <li>
+            <p>{{ address.contact_email }} - {{ address.contact_phone }}</p>
+            <p>{{ address.unit }} {{ address.street }}, {{ address.city }}, {{ address.state }}, {{ address.country }}</p>
+            <p>Billing Address: {{ address.is_billing }}</p>
+            <p>Note: {{ address.note }}</p>
+        </li>
+    {% endfor %}
+</ul>

@@ -10,4 +10,6 @@ urlpatterns = [
     path("cart", views.CartView.as_view(), name="cart"),
     path('accounts/', include('accounts.urls')),
     path('dashboard/', views.DashboardView.as_view(), name='dashboard'),
+    path('profile/', views.CustomerProfileView.as_view(), name='profile_detail'),
+    path('addresses/', views.AddressListView.as_view(), name='address_list'),
 ]
