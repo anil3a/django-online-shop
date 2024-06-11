@@ -14,24 +14,27 @@
     </div>
 
     <div class="card mt-4">
-      <div class="card-header">Your Profile</div>
+      <div class="card-header">
+        Your Profile
+        <a href="{% url 'profile_edit' %}" class="float-end">Edit</a>
+      </div>
       <div class="card-body">
-          <div hx-get="{% url 'profile_detail' %}" hx-trigger="load" hx-target="#profile-container" hx-swap="innerHTML">
-              <div id="profile-container">
-                  Loading profile...
-              </div>
+        <div hx-get="{% url 'profile_detail' %}" hx-trigger="load" hx-target="#profile-container" hx-swap="innerHTML">
+          <div id="profile-container">
+              Loading profile...
           </div>
+        </div>
       </div>
     </div>
 
     <div class="card mt-4">
       <div class="card-header">Your Addresses</div>
       <div class="card-body">
-          <div hx-get="{% url 'address_list' %}" hx-trigger="load" hx-target="#address-container" hx-swap="innerHTML">
-              <div id="address-container">
-                  Loading addresses...
-              </div>
+        <div hx-get="{% url 'address_list' %}" hx-trigger="load" hx-target="#address-container" hx-swap="innerHTML">
+          <div id="address-container">
+              Loading addresses...
           </div>
+        </div>
       </div>
     </div>
 

@@ -1,6 +1,6 @@
 import logging
 from .models import Category, Product
-from django.views.generic import ListView, TemplateView, View
+from django.views.generic import ListView, TemplateView, View, UpdateView
 from django.conf import settings
 from django.templatetags.static import static
 from django.urls import reverse_lazy
@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from .models import Customer, Address
+from . import forms
 
 
 class HTMXListView(ListView):
@@ -99,7 +100,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
 
 class CustomerProfileView(LoginRequiredMixin, TemplateView):
-    template_name = 'profile/profile_detail_partial.html'
+    template_name = 'partials/profile_detail_partial.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
@@ -107,13 +108,24 @@ class CustomerProfileView(LoginRequiredMixin, TemplateView):
         context['customer'] = Customer.objects.filter(
             user=self.request.user
         ).first()
-        return context;
+        return context
 
 
 class AddressListView(LoginRequiredMixin, ListView):
     model = Address
-    template_name = 'profile/address_list_partial.html'
+    template_name = 'partials/address_list_partial.html'
     context_object_name = 'addresses'
 
     def get_queryset(self):
         return Address.objects.filter(customer__user=self.request.user)
+
+
+class CustomerProfileEditView(LoginRequiredMixin, UpdateView):
+    model = Customer
+    template_name = 'profile_update.html'
+    context_object_name = 'customer'
+    form_class = forms.CustomerProfileEditForm
+    success_url = reverse_lazy('dashboard')
+
+    def get_object(self, queryset=None):
+        return self.model.objects.filter(user=self.request.user).first()

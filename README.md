@@ -2,6 +2,9 @@
 
 Skeleton setup of Django with postgres in a docker environment
 
+My setup uses a local reverse proxy server called [Traefik in docker](https://doc.traefik.io/traefik/getting-started/quick-start/).
+
+
 ## Folder structure
 ````
 djangoapp/

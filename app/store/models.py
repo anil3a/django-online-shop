@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.validators import RegexValidator
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, User
-from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 
 class BaseModel(models.Model):
@@ -46,22 +45,7 @@ class Product(BaseModel):
         return f"Product {self.name}"
 
 
-class CustomerManager(BaseUserManager):
-    def create_user(self, email, first_name, last_name, password=None):
-        if not email:
-            raise ValueError("The Email field must be set")
-        email = self.normalize_email(email)
-
-        if self.model.objects.filter(email=email).exists():
-            raise ValidationError("Email already exists")
-
-        user = self.model(email=email, first_name=first_name, last_name=last_name)
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-
-class Customer(BaseModel, AbstractBaseUser):
+class Customer(BaseModel):
     GENDER_CHOICES = [
         ('M', 'Male'),
         ('F', 'Female'),
@@ -88,10 +72,12 @@ class Customer(BaseModel, AbstractBaseUser):
     last_login_date = models.DateTimeField(null=True, blank=True)
     is_staff = models.BooleanField(default=False)
 
-    objects = CustomerManager()
-
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        name = ""
+        if self.user.first_name or self.user.last_name:
+            name = f" {self.user.first_name} {self.user.last_name}"
+
+        return f"[{self.pk}]{name}"
 
     class Meta:
         ordering = ['-pk']
