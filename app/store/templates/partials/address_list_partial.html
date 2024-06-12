@@ -1,10 +1,48 @@
-<ul>
-    {% for address in addresses %}
-        <li>
-            <p>{{ address.contact_email }} - {{ address.contact_phone }}</p>
-            <p>{{ address.unit }} {{ address.street }}, {{ address.city }}, {{ address.state }}, {{ address.country }}</p>
-            <p>Billing Address: {{ address.is_billing }}</p>
-            <p>Note: {{ address.note }}</p>
-        </li>
-    {% endfor %}
-</ul>
+<div class="row">
+  <div class="col-sm">
+    <h4>Billing Addresses</h4>
+    <ul>
+      {% for address in billing_addresses %}
+      <li>
+        <div>
+          Contact: {{ address.contact_email|default_if_none:'' }} -
+          {{ address.contact_phone_number|default_if_none:'' }}
+        </div>
+        <div>
+          {{ address.unit|default_if_none:'' }} {{ address.street|default_if_none:'' }},
+          {{ address.city|default_if_none:'' }}, {{ address.state|default_if_none:'' }},
+          {{ address.country|default_if_none:'' }}
+        </div>
+        <div>Billing Address: {{ address.is_billing }}</div>
+        <div>Note: {{ address.note }}</div>
+        <p><a href="{% url 'address_update' address.pk %}" class="">Edit</a></p>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="col-sm">
+    <h4>Shipping Addresses</h4>
+    <ul>
+      {% for address in shipping_addresses %}
+      <li>
+        <div>
+          Contact: {{ address.contact_email|default_if_none:'' }} -
+          {{ address.contact_phone_number|default_if_none:'' }}
+        </div>
+        <div>
+          {{ address.unit|default_if_none:'' }} {{ address.street|default_if_none:'' }},
+          {{ address.city|default_if_none:'' }}, {{ address.state|default_if_none:'' }},
+          {{ address.country|default_if_none:'' }}
+        </div>
+        <div>Billing Address: {{ address.is_billing }}</div>
+        <div>Note: {{ address.note }}</div>
+        <p><a href="{% url 'address_update' address.pk %}" class="">Edit</a></p>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+
+

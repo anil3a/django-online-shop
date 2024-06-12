@@ -28,7 +28,10 @@
     </div>
 
     <div class="card mt-4">
-      <div class="card-header">Your Addresses</div>
+      <div class="card-header">
+        Your Addresses
+        <a href="{% url 'address_create' %}" class="float-end">New</a>
+      </div>
       <div class="card-body">
         <div hx-get="{% url 'address_list' %}" hx-trigger="load" hx-target="#address-container" hx-swap="innerHTML">
           <div id="address-container">

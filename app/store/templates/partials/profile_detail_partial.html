@@ -12,19 +12,19 @@
     {% else %}
       <tr>
         <th>Company</th>
-        <td>{{ customer.company }}</td>
+        <td>{{ customer.company|default_if_none:'' }}</td>
       </tr>
       <tr>
         <th>Phone Number</th>
-        <td>{{ customer.phone_number }}</td>
+        <td>{{ customer.phone_number|default_if_none:'' }}</td>
       </tr>
       <tr>
         <th>Date of Birth</th>
-        <td>{{ customer.date_of_birth }}</td>
+        <td>{{ customer.date_of_birth|default_if_none:'' }}</td>
       </tr>
       <tr>
         <th>Gender</th>
-        <td>{{ customer.gender }}</td>
+        <td>{{ customer.gender|default_if_none:'' }}</td>
       </tr>
     {% endif %}
   </table>

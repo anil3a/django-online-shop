@@ -2,7 +2,7 @@ import logging
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-from store.models import Customer
+from store.models import Customer, Address
 from django.contrib.auth.models import User
 
 
@@ -44,4 +44,48 @@ class CustomerProfileEditForm(forms.ModelForm):
         fields = [
             'first_name', 'last_name', 'email',
             'company', 'phone_number', 'date_of_birth', 'gender'
+        ]
+
+
+class CustomerAddressEditForm(forms.ModelForm):
+
+    def __init__(self, customer, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.customer = customer
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('save', 'Save', css_class="btn btn-secondary"))
+
+    def save(self, commit=True):
+        self.instance.customer = self.customer
+        return super().save(commit=commit)
+
+    class Meta:
+        model = Address
+        fields = [
+            'contact_phone_number', 'contact_email',
+            'unit', 'street', 'city', 'state', 'postcode',
+            'country', 'is_billing', 'note'
+        ]
+
+
+class CustomerAddressCreateForm(forms.ModelForm):
+
+    def __init__(self, customer, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.customer = customer
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('save', 'Save', css_class="btn btn-secondary"))
+
+    def save(self, commit=True):
+        self.instance.customer = self.customer
+        return super().save(commit=commit)
+
+    class Meta:
+        model = Address
+        fields = [
+            'contact_phone_number', 'contact_email',
+            'unit', 'street', 'city', 'state', 'postcode',
+            'country', 'is_billing', 'note'
         ]

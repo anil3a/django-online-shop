@@ -1,6 +1,6 @@
 import logging
 from .models import Category, Product
-from django.views.generic import ListView, TemplateView, View, UpdateView
+from django.views.generic import ListView, TemplateView, View, UpdateView, CreateView
 from django.conf import settings
 from django.templatetags.static import static
 from django.urls import reverse_lazy
@@ -119,6 +119,13 @@ class AddressListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Address.objects.filter(customer__user=self.request.user)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        addresses = self.get_queryset()
+        context['billing_addresses'] = [addr for addr in addresses if addr.is_billing]
+        context['shipping_addresses'] = [addr for addr in addresses if not addr.is_billing]
+        return context
+
 
 class CustomerProfileEditView(LoginRequiredMixin, UpdateView):
     model = Customer
@@ -129,3 +136,31 @@ class CustomerProfileEditView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.model.objects.filter(user=self.request.user).first()
+
+
+class CustomerAddressEditView(LoginRequiredMixin, UpdateView):
+    model = Address
+    template_name = 'address_form.html'
+    context_object_name = 'address'
+    form_class = forms.CustomerAddressEditForm
+    success_url = reverse_lazy('dashboard')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["customer"] = Customer.objects.get(user=self.request.user)
+        return kwargs
+
+
+class CustomerAddressCreateView(LoginRequiredMixin, CreateView):
+    model = Address
+    template_name = 'address_form.html'
+    context_object_name = 'address'
+    form_class = forms.CustomerAddressCreateForm
+    success_url = reverse_lazy('dashboard')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["customer"] = Customer.objects.get(user=self.request.user)
+        return kwargs
+
+

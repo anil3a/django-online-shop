@@ -1,0 +1,19 @@
+{% extends "base/index.html" %}{% load crispy_forms_tags %}
+
+{% block content %}
+<main class="flex-shrink-0 my-auto d-flex justify-content-center">
+  <div style="margin-top: 60px;" class="container-lg">
+
+    <div class="card mt-4">
+      <div class="card-header">
+        <h2 class="text-center">Edit Address</h2>
+      </div>
+      <div class="card-body">
+        {% crispy form %}
+      </div>
+    </div>
+
+
+  </div>
+</main>
+{% endblock %}
